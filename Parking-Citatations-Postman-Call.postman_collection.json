@@ -1,0 +1,31 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Parking-Citatations-Postman-Call",
+		"_postman_id": "6a2293e1-2408-7e94-2b2a-6db71ba97c17",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sample-Model-API-Call",
+			"request": {
+				"url": "localhost:5000/model",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"Color\":\"GR\", \n\t\"Latitude\":63453.0,\n}"
+				},
+				"description": "This is an example call to the Assessment model server for the Parking Citations Data Anlysis."
+			},
+			"response": []
+		}
+	]
+}
