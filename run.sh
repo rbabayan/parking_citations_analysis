@@ -12,6 +12,9 @@ download_data_enabled=0;
 #Should the sqlite database be created?
 create_sqlite_db_enabled=0;
 
+#Should the model be trained?
+train_model_enabled=0;
+
 ###########################
 #   downloading dataset   #
 ###########################
@@ -53,7 +56,10 @@ esac
 ###########################
 echo
 echo "Training data..."
-python train.py
+case $train_model_enabled in
+  (1)   python train.py;;
+  (0)   echo "Data training skipped due to train_model_enabled set to false!";;
+esac
 
 ###########################
 #     running server      #

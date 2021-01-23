@@ -44,7 +44,14 @@ download_data_enabled=1;
 #Should the sqlite database be created?
 create_sqlite_db_enabled=1;
 ```
-Once the training is over the script will launch a local Flask server for the model. 
+
+If you want to re-train the model from the scratch, set the following configuration flat to True: 
+```
+#Should the model be trained?
+train_model_enabled=1;
+```
+
+The script will launch a local Flask server for the model. 
 
 If script runs with no issues, Flask should be running: 
 ```
@@ -83,3 +90,6 @@ If you have [Postman](https://www.postman.com/) installed, you can import the sa
 ```
 Parking-Citatations-Postman-Call.postman_collection.json
 ```
+
+#### Option 3: A Python script
+There is also a quick python script (`api_client.py`) that uses Python's http.client library to call the API. You can modify the payload in code and run the script to call the model server. 
