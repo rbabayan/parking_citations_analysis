@@ -27,8 +27,10 @@ def build_labels(train_set):
     
     return train_org
 
-def preprocess_data(df, categorical_columns = ['Color', 'Body Style']):
+def preprocess_data(df_dataset, categorical_columns = ['Color', 'Body Style']):
     
+    df = df_dataset[~df_dataset["Make"].isna()]
+
     df = df.drop(columns=["VIN", "Marked Time", "Meter Id", "Issue Date", 
                           "Violation Description", "Location", 'Route', 
                           'Violation code', 'RP State Plate', "Issue Date"])
@@ -40,33 +42,34 @@ def preprocess_data(df, categorical_columns = ['Color', 'Body Style']):
     
     return train
 
-def train_model(train_dataset, use_pre_trained = True):
+def train_model(train_dataset):
     
-    if use_pre_trained:
-        clf = pickle.load(open("/Users/xrxb206/Desktop/Assessment/logistic_20_color_state.pkl","rb"))
+    scaler = MinMaxScaler()
+    clf = LogisticRegression(class_weight = {
+        0: len(train)/len(train["target"]==0), 
+        1: len(train)/len(train["target"]==1)}, max_iter = 10000)
+
+    pipeline = Pipeline([('scalar', scaler), ('skb', SelectKBest(chi2)), ('estimator', clf)]) 
+
+    x = train_dataset.drop(columns=["Ticket number", "target"])
+    y = train_dataset[["target"]].values
+
+    param_candidate = [{'estimator__C': [0.00001, 0.0001, 0.001, 0.01, 0.1, 10, 100]}, 
+                        {'skb__k':list(range(1,20))}]
+
+    clf = GridSearchCV(pipeline, param_grid=param_candidate, cv=2,scoring="roc_auc", verbose=1)
+    clf = clf.fit(x, y.ravel())
     
-    else:
-        scaler = MinMaxScaler()
-        clf = LogisticRegression(class_weight = {0: len(train)/len(train["target"]==0), 
-                                                 1: len(train)/len(train["target"]==1)}, max_iter = 10000)
+    print('Best score for data:', clf.best_score_) 
+    print('Best params:',clf.best_params_) 
+    
+    #Save trained model
+    pickle.dump(clf, open("new_trained_model.pkl","wb"))
+    print("The model is save in 'new_trained_model.pkl' file")
 
-        pipeline = Pipeline([('scalar', scaler), ('skb', SelectKBest(chi2)), ('estimator', clf)]) 
 
-        x = train_dataset.drop(columns=["Ticket number", "target"])
-        y = train_dataset[["target"]].values
 
-        param_candidate = [{'skb__k':list(range(1,20))}, 
-                           {'estimator__C': [0.00001, 0.0001, 0.001, 0.01, 0.1, 10, 100, 1000]}] 
-
-        clf = GridSearchCV(pipeline, param_grid=param_candidate, cv=2,scoring="roc_auc", verbose=1)
-        clf = clf.fit(train_X, train_y.ravel())
-        
-        print('Best score for data:', clf.best_score_) 
-        print('Best params:',clf.best_params_) 
-        
-    return clf
-
-    def main():
+    def train_main():
         
         df = pd.read_csv("dataset.csv", 
                   usecols=None,
@@ -77,10 +80,9 @@ def train_model(train_dataset, use_pre_trained = True):
         train_org = df_dataset[~df_dataset["Make"].isna()]
         train_org = build_labels(train_org) 
         train_org = train_org.sample(frac=1, random_state=22)
-        clf = train_model(train_org, use_pre_trained = False)
+        train_model(train_org)
 
-        #Save clf
-        pickle.dump(clf, open("new_trained_model.pkl","wb"))
-        print("The model is save in 'new_trained_model.pkl' file")
+        
+
 
         
