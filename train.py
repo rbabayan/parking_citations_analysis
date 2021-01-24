@@ -80,7 +80,7 @@ df = pd.read_csv("dataset.csv",
             low_memory=False, 
             dtype=str
         )
-print("Data is read!") 
+print("Data is loaded!") 
 df_dataset = preprocess_data(df)
 train_org = df_dataset[~df_dataset["Make"].isna()]
 train_org = build_labels(train_org) 
