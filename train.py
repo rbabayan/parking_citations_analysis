@@ -64,7 +64,7 @@ def train_model(train_dataset):
     print('Best params:',clf.best_params_) 
     
     #Save trained model
-    pickle.dump(clf, open("new_trained_model.pkl","wb"))
+    pickle.dump([clf, train_dataset.columns], open("new_trained_model.pkl","wb"))
     print("The model is save in 'new_trained_model.pkl' file")
 
 
