@@ -46,8 +46,9 @@ create_sqlite_db_enabled=1;
 ```
 
 If you want to re-train the model from the scratch, set the following configuration flat to True: 
+Please note that trainign the model may take hours.
 ```
-#Should the model be trained?
+#Should the model be trained? 
 train_model_enabled=1;
 ```
 
@@ -79,9 +80,12 @@ Then you should be able to run the built container
 ```
 
 ### Call the model server with input data
-You have two options to call the model server:
+You have three options to call the model server:
 
-#### Option 1: CURL
+#### Option 1: A Python script (easiest)
+There is also a quick python script (`api_client.py`) that uses Python's http.client library to call the API. You can modify the payload in code and run the script to call the model server. 
+
+#### Option 2: CURL
 Send your sample data from a separate terminal using curl:
 ```
 curl --header "Content-Type: application/json" \
@@ -94,11 +98,9 @@ You should be able to see the response in form of a JSON object:
 {"popular_make_probability":55.23}
 ```
 
-#### Option 2: Postman
+#### Option 3: Postman
 If you have [Postman](https://www.postman.com/) installed, you can import the sample Postman collection in the repository where the API calls are pre-defined:
 ```
 Parking-Citatations-Postman-Call.postman_collection.json
 ```
 
-#### Option 3: A Python script
-There is also a quick python script (`api_client.py`) that uses Python's http.client library to call the API. You can modify the payload in code and run the script to call the model server. 
