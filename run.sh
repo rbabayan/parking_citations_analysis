@@ -13,7 +13,7 @@ download_data_enabled=0;
 create_sqlite_db_enabled=0;
 
 #Should the model be trained?
-train_model_enabled=1;
+train_model_enabled=0;
 
 ###########################
 #   downloading dataset   #

@@ -5,7 +5,7 @@ import pandas as pd
 def get_prediction(logger, input_data, use_pre_trained = True):
     
     if use_pre_trained:
-        model_name_file = "/Users/xrxb206/Desktop/clf_features_pretraind.pkl"
+        model_name_file = "clf_features_pretraind.pkl"
     else:
         model_name_file = "new_trained_model.pkl"
 
