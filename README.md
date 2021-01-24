@@ -13,9 +13,9 @@ The repository contains the followings:
     2. curl example
     3. Postman collection
 3. Notebook files
-    1. model.ipynb: A notebook contains process to find the best training approach and model evaluation
-    2. data_analysis.ipynb: A notebook contains EDA on raw data
-    3. part_two.ipynb: A note book contains analysis related to the part two of the assessment  
+    1. model.ipynb: A notebook that contains process to find the best training approach and model evaluation
+    2. data_analysis.ipynb: A notebook that contains EDA on raw data
+    3. part_two.ipynb: A notebook that contains analysis related to the part two of the assessment  
 4. Dockerfile: To build a linux image that runs the model (optional)
 
 ## How to run:
