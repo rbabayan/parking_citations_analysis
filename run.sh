@@ -13,7 +13,7 @@ download_data_enabled=0;
 create_sqlite_db_enabled=0;
 
 #Should the model be trained?
-train_model_enabled=0;
+train_model_enabled=1;
 
 ###########################
 #   downloading dataset   #
@@ -21,7 +21,7 @@ train_model_enabled=0;
 echo
 echo "Downloading dataset from S3....";
 case $download_data_enabled in
-  (1)   curl $data_url -o "dataset.csv";;
+  (1)   wget -O "dataset.csv" $data_url;;
   (0)   echo "Data download skipped due to download_data_enabled set to false!";;
 esac
 
@@ -38,7 +38,6 @@ pip install -r requirements.txt
 echo
 echo "Installing SQLITE if Linux...";
 unameOut="$(uname -s)"
-echo $unameOut
 case "${unameOut}" in
     Linux*) sudo apt-get install sqlite3;;
 esac
@@ -55,7 +54,7 @@ esac
 #      training data      #
 ###########################
 echo
-echo "Training data..."
+echo "Training model..."
 case $train_model_enabled in
   (1)   python train.py;;
   (0)   echo "Data training skipped due to train_model_enabled set to false!";;

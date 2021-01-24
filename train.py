@@ -33,7 +33,8 @@ def preprocess_data(df_dataset, categorical_columns = ['Color', 'Body Style']):
 
     df = df.drop(columns=["VIN", "Marked Time", "Meter Id", "Issue Date", 
                           "Violation Description", "Location", 'Route', 
-                          'Violation code', 'RP State Plate', "Issue Date"])
+                          'Violation code', 'RP State Plate', "Issue Date", 'Latitude', 'Longitude', 
+                          'Agency', 'Issue time'])
     
     train = pd.get_dummies(data=df, columns=categorical_columns)
 
@@ -67,20 +68,26 @@ def train_model(train_dataset):
     pickle.dump([clf, train_dataset.columns], open("new_trained_model.pkl","wb"))
     print("The model is save in 'new_trained_model.pkl' file")
 
+# 1: Top25 , 0:uncommon make
+def create_label(col,common_makes):
+    if col in common_makes:
+        return 1
+    else:
+        return 0    
+               
+df = pd.read_csv("dataset.csv", 
+            usecols=None,
+            low_memory=False, 
+            dtype=str
+        )
+print("Data is read!") 
+df_dataset = preprocess_data(df)
+train_org = df_dataset[~df_dataset["Make"].isna()]
+train_org = build_labels(train_org) 
+train_org = train_org.sample(frac=1, random_state=22)
+print("Data preprocessing is done!")
+train_model(train_org)
 
-
-    def train_main():
-        
-        df = pd.read_csv("dataset.csv", 
-                  usecols=None,
-                  low_memory=False, 
-                  dtype=str
-                )
-        df_dataset = preprocess_data(df)
-        train_org = df_dataset[~df_dataset["Make"].isna()]
-        train_org = build_labels(train_org) 
-        train_org = train_org.sample(frac=1, random_state=22)
-        train_model(train_org)
 
         
 
