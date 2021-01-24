@@ -47,8 +47,8 @@ def train_model(train_dataset):
     
     scaler = MinMaxScaler()
     clf = LogisticRegression(class_weight = {
-        0: len(train)/len(train["target"]==0), 
-        1: len(train)/len(train["target"]==1)}, max_iter = 10000)
+        0: len(train_dataset)/len(train_dataset["target"]==0), 
+        1: len(train_dataset)/len(train_dataset["target"]==1)}, max_iter = 10000)
 
     pipeline = Pipeline([('scalar', scaler), ('skb', SelectKBest(chi2)), ('estimator', clf)]) 
 

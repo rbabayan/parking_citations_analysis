@@ -51,6 +51,15 @@ If you want to re-train the model from the scratch, set the following configurat
 train_model_enabled=1;
 ```
 
+If you get the following error when running the script: 
+```
+./run.sh: Permission denied
+```
+Add read/write/execution permissions to your file to everyone: 
+```
+chmod 777 run.sh
+```
+
 The script will launch a local Flask server for the model. 
 
 If script runs with no issues, Flask should be running: 
