@@ -4,12 +4,10 @@ conn = http.client.HTTPConnection("localhost:5000")
 
 payload = '''
 {
-    "Latitude": 6440041.1,
-    "Issue time": 1515.0,
-    "Agency": 2.0, 
-    "Longitude": 1802686.2, 
     "Color": "WH", 
-    "Body Style": "PA" 
+    "Body Style": "PA",
+    "Fine amount": 50.0,
+    "Plate Expiry Date": 200304.0
 }
 '''
 

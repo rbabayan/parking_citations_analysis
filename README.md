@@ -8,7 +8,15 @@ The repository contains the followings:
     2. Install all Python requirements
     3. Train the data by calling train.py 
     4. Launch model server by calling api.py & model_core.py 
-2. API Calls: A Postman collection of API calls with sample test data
+2. API Calls methods:
+    1. api_client.py: a python script to call the model server
+    2. curl example
+    3. Postman collection
+3. Notebook files
+    1. model.ipynb: A notebook contains process to find the best training approach and model evaluation
+    2. data_analysis.ipynb: A notebook contains EDA on raw data
+    3. part_two.ipynb: A note book contains analysis related to the part two of the assessment  
+4. Dockerfile: To build a linux image that runs the model (optional)
 
 ## How to run:
 
@@ -45,8 +53,8 @@ download_data_enabled=1;
 create_sqlite_db_enabled=1;
 ```
 
-If you want to re-train the model from the scratch, set the following configuration flat to True: 
-Please note that trainign the model may take hours.
+If you want to re-train the model from the scratch, set the following configuration flat to True
+(Please note that trainign the model may take hours.) :
 ```
 #Should the model be trained? 
 train_model_enabled=1;
@@ -80,7 +88,9 @@ Then you should be able to run the built container
 ```
 
 ### Call the model server with input data
+For the pretrained model we only need to pass 4 columns: "Color", "Body Style", "Fine amount", "Plate Expiry Date"
 You have three options to call the model server:
+
 
 #### Option 1: A Python script (easiest)
 There is also a quick python script (`api_client.py`) that uses Python's http.client library to call the API. You can modify the payload in code and run the script to call the model server. 
@@ -90,7 +100,7 @@ Send your sample data from a separate terminal using curl:
 ```
 curl --header "Content-Type: application/json" \
      --request POST \
-     --data '{"Color":"GR", "Latitude":63453.0}' \
+     --data '{"Color": "WH", "Body Style": "PA", "Fine amount": 50.0,"Plate Expiry Date": 200304.0}' \
      http://localhost:5000/model
 ```
 You should be able to see the response in form of a JSON object: 
